@@ -12,7 +12,7 @@ class LifeTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function test_state()
     {
         $response = $this->post(
             '/api/state',
