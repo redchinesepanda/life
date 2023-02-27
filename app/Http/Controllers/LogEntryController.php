@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Models\LogEntry;
 use Carbon\Carbon;
+use DB;
 
 class LogEntryController extends Controller
 {
