@@ -11,7 +11,7 @@ class LogEntryController extends Controller
     private function day( $url ) {
         return response()->json( [
             'data' => LogEntry::where( 'url', $url )
-                ->whereDay( 'created_at', now()->today() )
+                ->whereDate( 'created_at', now()->today() )
                 ->count()
         ], 200 );
     }
