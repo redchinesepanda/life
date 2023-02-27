@@ -17,7 +17,7 @@ class LogEntryController extends Controller
         return response()->json( [
             'data' => LogEntry::whereBetween(
                     'created_at',
-                    [ date($from), date($to) ]
+                    [ $from, $to ]
                 )
                 ->count()
         ], 200 );
