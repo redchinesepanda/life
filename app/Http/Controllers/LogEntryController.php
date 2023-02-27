@@ -170,13 +170,13 @@ class LogEntryController extends Controller
             ] );
         }
 
-        if ( Cache::store( 'redis' )->has( $logEntry->url ) ) {
-            $result['data'] = Cache::store( 'redis' )->get( $logEntry->url );
+        if ( Cache::store( 'redis' )->has( $input['url'] ) ) {
+            $result['data'] = Cache::store( 'redis' )->get( $input['url'] );
 		} else {
             $result['data'] = LogEntry::where( 'url', $input['url'] )->count();
 
 			Cache::store( 'redis' )->put(
-                $logEntry->url,
+                $input['url'],
 
                 $result['data'],
 
@@ -223,11 +223,11 @@ class LogEntryController extends Controller
  
         $logEntry->save();
 
-        if ( Cache::store( 'redis' )->has( $logEntry->url ) ) {
-            $cahe_value = Cache::store( 'redis' )->get( $logEntry->url );
+        if ( Cache::store( 'redis' )->has( $input['url'] ) ) {
+            $cahe_value = Cache::store( 'redis' )->get( $input['url'] );
 
 			Cache::store( 'redis' )->put(
-                $logEntry->url,
+                $input['url'],
 
                 ++$cahe_value,
 
