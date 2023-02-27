@@ -7,6 +7,7 @@ use Validator;
 use App\Models\LogEntry;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Cache;
 
 class LogEntryController extends Controller
 {
