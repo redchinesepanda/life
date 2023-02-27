@@ -170,8 +170,12 @@ class LogEntryController extends Controller
             ] );
         }
 
+        $cache_state = 'cache unused';
+
         if ( Cache::store( 'redis' )->has( $input['url'] ) ) {
             $result['data'] = Cache::store( 'redis' )->get( $input['url'] );
+
+            $cache_state = 'from cache';
 		} else {
             $result['data'] = LogEntry::where( 'url', $input['url'] )->count();
 
@@ -182,6 +186,8 @@ class LogEntryController extends Controller
 
                 now()->addMinutes( 10 )
             );
+
+            $cache_state = 'cache set';
         }
 
         return response()->json( $result, 200 );
@@ -223,6 +229,8 @@ class LogEntryController extends Controller
  
         $logEntry->save();
 
+        $cache_state = 'cache unused';
+
         if ( Cache::store( 'redis' )->has( $input['url'] ) ) {
             $cahe_value = Cache::store( 'redis' )->get( $input['url'] );
 
@@ -233,6 +241,8 @@ class LogEntryController extends Controller
 
                 now()->addMinutes( 10 )
             );
+
+            $cache_state = 'cache set';
 		}
 
         return response()->json( [
@@ -240,7 +250,9 @@ class LogEntryController extends Controller
 
             'message' => 'LogEntry added succesfully.',
 
-            'data' => $logEntry
+            'data' => $logEntry,
+
+            'cache' => $cache_state
         ], 200 );
     }
 }
