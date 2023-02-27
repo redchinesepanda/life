@@ -20,19 +20,6 @@ class LogEntryController extends Controller
         
         $endDate = Carbon::createFromFormat('Y-m-d', $to)->endOfDay();
 
-        // return response()->json( [
-        //     'data' => LogEntry::whereBetween(
-        //             'created_at',
-        //             [$startDate, $endDate]
-        //         )
-        //         ->count()
-        // ], 200 );
-
-        // User::select('timezone', DB::raw('count(*) as total'))
-        // ->groupBy('timezone')
-        // ->pluck('total','timezone')
-        // ->toArray();
-
         return response()->json( [
             'data' => LogEntry::select('url', DB::raw('count(*) as total'))
                 ->groupBy('url')
