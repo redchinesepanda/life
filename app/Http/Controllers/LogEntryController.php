@@ -13,7 +13,7 @@ class LogEntryController extends Controller
      *
      * @return json
      */
-    private function custom( $from, $to ) {
+    public function custom( $from, $to ) {
         return response()->json( [
             'data' => LogEntry::where( 'url', $url )
                 ->whereBetween(
