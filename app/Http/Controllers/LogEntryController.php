@@ -19,8 +19,6 @@ class LogEntryController extends Controller
         
         $endDate = Carbon::createFromFormat('Y-m-d', $to)->endOfDay();
 
-        // $posts = Post::whereBetween('created_at', [$startDate, $endDate])->get();
-
         return response()->json( [
             'data' => LogEntry::whereBetween(
                     'created_at',
