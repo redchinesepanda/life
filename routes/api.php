@@ -27,4 +27,7 @@ Route::post('/period', [LogEntryController::class, 'period']);
 
 // Route::post('/custom/{from}/{to}', [LogEntryController::class, 'custom'])->where('from', '\d{4}-\d{2}-\d{2}')->where('to', '\d{4}-\d{2}-\d{2}');
 
-Route::post('/custom/{from}/{to}', [LogEntryController::class, 'custom']);
+// Route::post('/custom/{from}/{to}', [LogEntryController::class, 'custom']);
+
+Route::post('/custom/{from}/{to}', [LogEntryController::class, 'custom'])
+    ->where('from', '[0-9-]+');
