@@ -13,7 +13,7 @@ class LogEntryController extends Controller
      *
      * @return json
      */
-    private function day( $url ) {
+    private function week( $url ) {
         return response()->json( [
             'data' => LogEntry::where( 'url', $url )
                 // ->whereDate( 'created_at', now()->today() )
