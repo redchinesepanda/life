@@ -169,9 +169,21 @@ class LogEntryController extends Controller
             ] );
         }
 
-        return response()->json( [
-            'data' => LogEntry::where( 'url', $input['url'] )->count()
-        ], 200 );
+        if ( Cache::store( 'redis' )->has( $logEntry->url ) ) {
+            $result['data'] = Cache::store( 'redis' )->get( $logEntry->url );
+		} else {
+            $result['data'] = LogEntry::where( 'url', $input['url'] )->count();
+
+			Cache::store( 'redis' )->put(
+                $logEntry->url,
+
+                $result['data'],
+
+                now()->addMinutes( 10 )
+            );
+        }
+
+        return response()->json( $result, 200 );
     }
 
     /**
@@ -209,6 +221,16 @@ class LogEntryController extends Controller
         $logEntry->url = $input['url'];
  
         $logEntry->save();
+
+        if ( Cache::store( 'redis' )->has( $logEntry->url ) ) {
+			Cache::store( 'redis' )->put(
+                $logEntry->url,
+
+                ++( Cache::store( 'redis' )->get( $logEntry->url ) ),
+
+                now()->addMinutes( 10 )
+            );
+		}
 
         return response()->json( [
             'success' => true,
