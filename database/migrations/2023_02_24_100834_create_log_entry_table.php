@@ -15,6 +15,8 @@ class CreateLogEntryTable extends Migration
     {
         Schema::create('log_entry', function (Blueprint $table) {
             $table->id();
+            $table->string('ip');
+            $table->string('url');
             $table->timestamps();
         });
     }
