@@ -9,6 +9,22 @@ use App\Models\LogEntry;
 class LogEntryController extends Controller
 {
     /**
+     * count url LogEntry with user limit
+     *
+     * @return json
+     */
+    private function custom( $from, $to ) {
+        return response()->json( [
+            'data' => LogEntry::where( 'url', $url )
+                ->whereBetween(
+                    'created_at',
+                    [ date($from), date($to) ]
+                )
+                ->count()
+        ], 200 );
+    }
+
+    /**
      * count url LogEntry with year limit
      *
      * @return json
