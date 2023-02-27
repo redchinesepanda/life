@@ -223,10 +223,12 @@ class LogEntryController extends Controller
         $logEntry->save();
 
         if ( Cache::store( 'redis' )->has( $logEntry->url ) ) {
+            $cahe_value = Cache::store( 'redis' )->get( $logEntry->url );
+
 			Cache::store( 'redis' )->put(
                 $logEntry->url,
 
-                ++( Cache::store( 'redis' )->get( $logEntry->url ) ),
+                ++$cahe_value,
 
                 now()->addMinutes( 10 )
             );
