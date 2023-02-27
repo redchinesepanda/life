@@ -8,8 +8,57 @@ use App\Models\LogEntry;
 
 class LogEntryController extends Controller
 {
+    private function day() {
+        return response()->json( [
+            'data' => LogEntry::where( 'url', $input['url'] )
+                ->whereDay( 'created_at', now()->today() )
+                ->count()
+        ], 200 );
+    }
+
     /**
-     * new LogEntry
+     * count url LogEntry with period limit
+     *
+     * @return json
+     */
+    public function period(Request $request)
+    {
+        $input = $request->only( [ 'url', 'period' ] );
+
+        $validator = Validator::make(
+            $input,
+            [
+                'url' => 'required|url',
+
+                'period' => 'required|string'
+            ]
+        );
+
+        if ( $validator->fails() ) {
+            return response()->json( [
+                'success' => false,
+
+                'message' => 'Change request data as described below.',
+
+                'errors' => $validator->errors()
+            ] );
+        }
+
+        $response = response()->json( [
+            'success' => false,
+
+            'message' => 'Use correct period value (day, week, month, year).'
+        ] );
+
+        if ( $input['period'] == 'day' ) {
+            $response = $this->day();
+        }
+
+        return $response;
+    }
+
+    /**
+     * count url LogEntry
      *
      * @return json
      */
@@ -19,7 +68,6 @@ class LogEntryController extends Controller
 
         $validator = Validator::make(
             $input,
-
             [ 'url' => 'required|url' ]
         );
 
@@ -33,9 +81,9 @@ class LogEntryController extends Controller
             ] );
         }
 
-        return response()->json([
+        return response()->json( [
             'data' => LogEntry::where( 'url', $input['url'] )->count()
-        ], 200);
+        ], 200 );
     }
 
     /**
