@@ -1,0 +1,216 @@
+{
+	"info": {
+		"_postman_id": "34af3012-3847-4452-9bd1-60598c0f78f3",
+		"name": "life",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25554955"
+	},
+	"item": [
+		{
+			"name": "new",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://life.vlukas6o.beget.tech/api/new?ip=192.168.0.1&url=https://test.ru/main",
+					"protocol": "http",
+					"host": [
+						"life",
+						"vlukas6o",
+						"beget",
+						"tech"
+					],
+					"path": [
+						"api",
+						"new"
+					],
+					"query": [
+						{
+							"key": "ip",
+							"value": "192.168.0.1"
+						},
+						{
+							"key": "url",
+							"value": "https://test.ru/main"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "state",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://life.vlukas6o.beget.tech/api/state?url=https://test.ru/main/subpage",
+					"protocol": "http",
+					"host": [
+						"life",
+						"vlukas6o",
+						"beget",
+						"tech"
+					],
+					"path": [
+						"api",
+						"state"
+					],
+					"query": [
+						{
+							"key": "url",
+							"value": "https://test.ru/main/subpage"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "period",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer 1|8JdgH5lQSc7rcadvY40osvQqwvqKCJmgUHxfYaiH",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://life.vlukas6o.beget.tech/api/period?url=https://test.ru/main&period=year",
+					"protocol": "http",
+					"host": [
+						"life",
+						"vlukas6o",
+						"beget",
+						"tech"
+					],
+					"path": [
+						"api",
+						"period"
+					],
+					"query": [
+						{
+							"key": "url",
+							"value": "https://test.ru/main"
+						},
+						{
+							"key": "period",
+							"value": "year"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "custom",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer 1|8JdgH5lQSc7rcadvY40osvQqwvqKCJmgUHxfYaiH",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://life.vlukas6o.beget.tech/api/custom/2023-02-26/2023-02-27",
+					"protocol": "http",
+					"host": [
+						"life",
+						"vlukas6o",
+						"beget",
+						"tech"
+					],
+					"path": [
+						"api",
+						"custom",
+						"2023-02-26",
+						"2023-02-27"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://life.vlukas6o.beget.tech/api/register?name=redchinesepanda&email=dmitriy.grechishkin@yandex.ru&password=Wozlosnad1",
+					"protocol": "http",
+					"host": [
+						"life",
+						"vlukas6o",
+						"beget",
+						"tech"
+					],
+					"path": [
+						"api",
+						"register"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "redchinesepanda"
+						},
+						{
+							"key": "email",
+							"value": "dmitriy.grechishkin@yandex.ru"
+						},
+						{
+							"key": "password",
+							"value": "Wozlosnad1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://life.vlukas6o.beget.tech/api/login?email=dmitriy.grechishkin@yandex.ru&password=Wozlosnad1",
+					"protocol": "http",
+					"host": [
+						"life",
+						"vlukas6o",
+						"beget",
+						"tech"
+					],
+					"path": [
+						"api",
+						"login"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "dmitriy.grechishkin@yandex.ru"
+						},
+						{
+							"key": "password",
+							"value": "Wozlosnad1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
