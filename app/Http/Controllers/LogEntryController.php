@@ -14,10 +14,16 @@ class LogEntryController extends Controller
      * @return json
      */
     public function custom( $from, $to ) {
+        $startDate = Carbon::createFromFormat('Y-m-d', $from)->startOfDay();
+        
+        $endDate = Carbon::createFromFormat('Y-m-d', $to)->endOfDay();
+
+        // $posts = Post::whereBetween('created_at', [$startDate, $endDate])->get();
+
         return response()->json( [
             'data' => LogEntry::whereBetween(
                     'created_at',
-                    [ $from, $to ]
+                    [$startDate, $endDate]
                 )
                 ->count()
         ], 200 );
