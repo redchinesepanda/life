@@ -40,7 +40,7 @@ class LogEntryController extends Controller
                     'created_at',
                     [$startDate, $endDate]
                 )
-                ->toArray()
+                ->get()
         ], 200 );
     }
 
