@@ -15,8 +15,7 @@ class LogEntryController extends Controller
      */
     public function custom( $from, $to ) {
         return response()->json( [
-            'data' => LogEntry::where( 'url', $url )
-                ->whereBetween(
+            'data' => LogEntry::whereBetween(
                     'created_at',
                     [ date($from), date($to) ]
                 )
