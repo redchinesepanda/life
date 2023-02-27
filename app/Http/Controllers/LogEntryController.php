@@ -8,6 +8,28 @@ use App\Models\LogEntry;
 
 class LogEntryController extends Controller
 {
+    /**
+     * count url LogEntry with week limit
+     *
+     * @return json
+     */
+    private function day( $url ) {
+        return response()->json( [
+            'data' => LogEntry::where( 'url', $url )
+                // ->whereDate( 'created_at', now()->today() )
+                ->whereBetween(
+                    'created_at',
+                    [ now()->startOfWeek(), now()->endOfWeek() ]
+                )
+                ->count()
+        ], 200 );
+    }
+
+    /**
+     * count url LogEntry with day limit
+     *
+     * @return json
+     */
     private function day( $url ) {
         return response()->json( [
             'data' => LogEntry::where( 'url', $url )
