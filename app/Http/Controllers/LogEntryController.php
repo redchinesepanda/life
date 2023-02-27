@@ -76,6 +76,10 @@ class LogEntryController extends Controller
             $response = $this->day( $input['url'] );
         }
 
+        if ( $input['period'] == 'week' ) {
+            $response = $this->week( $input['url'] );
+        }
+
         return $response;
     }
 
