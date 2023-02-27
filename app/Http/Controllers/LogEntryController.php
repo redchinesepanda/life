@@ -170,12 +170,12 @@ class LogEntryController extends Controller
             ] );
         }
 
-        $cache_state = 'cache unused';
+        $result['cache'] = 'cache unused';
 
         if ( Cache::store( 'redis' )->has( $input['url'] ) ) {
             $result['data'] = Cache::store( 'redis' )->get( $input['url'] );
 
-            $cache_state = 'from cache';
+            $result['cache'] = 'from cache';
 		} else {
             $result['data'] = LogEntry::where( 'url', $input['url'] )->count();
 
@@ -187,7 +187,7 @@ class LogEntryController extends Controller
                 now()->addMinutes( 10 )
             );
 
-            $cache_state = 'cache set';
+            $result['cache'] = 'cache set';
         }
 
         return response()->json( $result, 200 );
