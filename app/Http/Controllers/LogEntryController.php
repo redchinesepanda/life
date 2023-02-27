@@ -16,7 +16,10 @@ class LogEntryController extends Controller
     private function year( $url ) {
         return response()->json( [
             'data' => LogEntry::where( 'url', $url )
-                ->whereDate( 'created_at', now()->year() )
+                ->whereBetween(
+                    'created_at',
+                    [ now()->startOfYear(), now()->endOfYear() ]
+                )
                 ->count()
         ], 200 );
     }
@@ -29,7 +32,6 @@ class LogEntryController extends Controller
     private function month( $url ) {
         return response()->json( [
             'data' => LogEntry::where( 'url', $url )
-                // ->whereDate( 'created_at', now()->month() )
                 ->whereBetween(
                     'created_at',
                     [ now()->startOfMonth(), now()->endOfMonth() ]
