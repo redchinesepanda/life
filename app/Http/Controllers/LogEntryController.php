@@ -8,9 +8,9 @@ use App\Models\LogEntry;
 
 class LogEntryController extends Controller
 {
-    private function day() {
+    private function day( $url ) {
         return response()->json( [
-            'data' => LogEntry::where( 'url', $input['url'] )
+            'data' => LogEntry::where( 'url', $url )
                 ->whereDay( 'created_at', now()->today() )
                 ->count()
         ], 200 );
@@ -51,7 +51,7 @@ class LogEntryController extends Controller
         ] );
 
         if ( $input['period'] == 'day' ) {
-            $response = $this->day();
+            $response = $this->day( $input['url'] );
         }
 
         return $response;
