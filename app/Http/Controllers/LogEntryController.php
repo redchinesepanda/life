@@ -9,6 +9,32 @@ use App\Models\LogEntry;
 class LogEntryController extends Controller
 {
     /**
+     * count url LogEntry with year limit
+     *
+     * @return json
+     */
+    private function year( $url ) {
+        return response()->json( [
+            'data' => LogEntry::where( 'url', $url )
+                ->whereDate( 'created_at', now()->year() )
+                ->count()
+        ], 200 );
+    }
+
+    /**
+     * count url LogEntry with month limit
+     *
+     * @return json
+     */
+    private function month( $url ) {
+        return response()->json( [
+            'data' => LogEntry::where( 'url', $url )
+                ->whereDate( 'created_at', now()->month() )
+                ->count()
+        ], 200 );
+    }
+
+    /**
      * count url LogEntry with week limit
      *
      * @return json
@@ -16,7 +42,6 @@ class LogEntryController extends Controller
     private function week( $url ) {
         return response()->json( [
             'data' => LogEntry::where( 'url', $url )
-                // ->whereDate( 'created_at', now()->today() )
                 ->whereBetween(
                     'created_at',
                     [ now()->startOfWeek(), now()->endOfWeek() ]
@@ -78,6 +103,14 @@ class LogEntryController extends Controller
 
         if ( $input['period'] == 'week' ) {
             $response = $this->week( $input['url'] );
+        }
+
+        if ( $input['period'] == 'month' ) {
+            $response = $this->month( $input['url'] );
+        }
+
+        if ( $input['period'] == 'year' ) {
+            $response = $this->year( $input['url'] );
         }
 
         return $response;
