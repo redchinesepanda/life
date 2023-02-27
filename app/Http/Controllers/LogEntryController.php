@@ -13,15 +13,48 @@ class LogEntryController extends Controller
      *
      * @return json
      */
+    public function state(Request $request)
+    {
+        $input = $request->only( [ 'url' ] );
+
+        $validator = Validator::make(
+            $input,
+
+            [ 'url' => 'required|url' ]
+        );
+
+        if ( $validator->fails() ) {
+            return response()->json( [
+                'success' => false,
+
+                'message' => 'Change request data as described below.',
+
+                'errors' => $validator->errors()
+            ] );
+        }
+
+        return response()->json([
+            'data' => LogEntry::where( 'url', $input['url'] )->count()
+        ], 200);
+    }
+
+    /**
+     * new LogEntry
+     *
+     * @return json
+     */
     public function new(Request $request)
     {
-        $input = $request->only( ['ip', 'url'] );
+        $input = $request->only( [ 'ip', 'url' ] );
 
-        $validator = Validator::make( $input, [
-            'ip' => 'required|ip',
+        $validator = Validator::make(
+            $input,
+            [
+                'ip' => 'required|ip',
 
-            'url' => 'required|url'
-        ] );
+                'url' => 'required|url'
+            ]
+        );
 
         if ( $validator->fails() ) {
             return response()->json( [

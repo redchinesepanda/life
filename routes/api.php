@@ -20,3 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/new', [LogEntryController::class, 'new']);
+
+Route::post('/state', [LogEntryController::class, 'state']);
