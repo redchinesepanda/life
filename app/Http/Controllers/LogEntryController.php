@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\LogEntry;
+use Carbon\Carbon;
 
 class LogEntryController extends Controller
 {
