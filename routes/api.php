@@ -26,6 +26,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/new', [LogEntryController::class, 'new']);
 
+// [review] Получение лучше делать через GET, если не слишком сложный запрос.
 Route::post('/state', [LogEntryController::class, 'state']);
 
 Route::post('/period', [LogEntryController::class, 'period'])->middleware('auth:sanctum');

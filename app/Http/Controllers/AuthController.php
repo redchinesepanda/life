@@ -16,6 +16,9 @@ class AuthController extends Controller
      */
     public function register( Request $request )
     {
+        // [review] Судя по докам и коду пользователь может отправить креды(пароль, почта) через query-параметры.
+        // так лучше не делать, т.к. пароль попадет в открытом виде в логи веб-сервера.
+        // тем более засылаем через POST. Лучше принудительно только тело обрабатывать.
         $input = $request->only( ['name', 'email', 'password'] );
 
         $validator = Validator::make(
