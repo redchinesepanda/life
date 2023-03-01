@@ -9,6 +9,12 @@ use Carbon\Carbon;
 use DB;
 use Illuminate\Support\Facades\Cache;
 
+/**
+ * [review] Общие замечания.
+ *  Логику получения и добавления лучше выносить в отдельные сервисы/пакеты/репозитории/и т.д. В общем , любым проектным шаблоном.
+ *  Ответы не стандартизированы, что усложняет работу для клиентов.
+ *  Если будет много данных, то сервер может и не вернуть или повиснуть. Желательно добвалять пагинацию
+ */
 class LogEntryController extends Controller
 {
     /**
@@ -17,6 +23,7 @@ class LogEntryController extends Controller
      * @return json
      */
     public function custom( $from, $to ) {
+        // [review] Формат дат лучше провалидировать иначе 500 упадет.
         $startDate = Carbon::createFromFormat('Y-m-d', $from)->startOfDay();
         
         $endDate = Carbon::createFromFormat('Y-m-d', $to)->endOfDay();
@@ -121,6 +128,9 @@ class LogEntryController extends Controller
             ] );
         }
 
+        // [review] Лучше проверку типа внести в логику валидатора
+        // Или хотя бы отдавать 400 код, если неправильный период.
+        // Иначе получается 200 код, но запрос не выполнен.
         $response = response()->json( [
             'success' => false,
 
@@ -173,10 +183,12 @@ class LogEntryController extends Controller
         $result['cache'] = 'cache unused';
 
         if ( Cache::store( 'redis' )->has( $input['url'] ) ) {
+            // [review] из кэша возвращается string
             $result['data'] = Cache::store( 'redis' )->get( $input['url'] );
 
             $result['cache'] = 'from cache';
 		} else {
+            // [review] из БД возвращается int
             $result['data'] = LogEntry::where( 'url', $input['url'] )->count();
 
 			Cache::store( 'redis' )->put(
@@ -190,6 +202,7 @@ class LogEntryController extends Controller
             $result['cache'] = 'cache set';
         }
 
+        // [review] в апи уходит то int, то string. 
         return response()->json( $result, 200 );
     }
 
@@ -202,6 +215,9 @@ class LogEntryController extends Controller
     {
         $input = $request->only( [ 'ip', 'url' ] );
 
+        // [review] ip нужно брать из заголовков HTTP_*, X-Proxy-Ip-pass и т.д.
+        // Напрямую можно все что угодно передать. К тому же напрямую js-клиент ничего не знает об ip адресе
+        // https://test.ru/main?utm_time=1235 и https://test.ru/main одинаковые или разные страницы?
         $validator = Validator::make(
             $input,
             [
@@ -231,6 +247,10 @@ class LogEntryController extends Controller
 
         $cache_state = 'cache unused';
 
+        /**
+         * [review] т.к. это ресурс на добавление, то нет смысла проверять есть ли он в кеше, т.к. считаем каждый просмотр.
+         * По логике контроллера в кэш попадет урл только тот, который вызывали через метод /state
+         */
         if ( Cache::store( 'redis' )->has( $input['url'] ) ) {
             $cahe_value = Cache::store( 'redis' )->get( $input['url'] );
 
